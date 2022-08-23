@@ -1,0 +1,14 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/linkcutter
+    username: admin
+    password: admin
+  flyway:
+    baseline-on-migrate: true
+  main:
+    allow-circular-references: true
+
