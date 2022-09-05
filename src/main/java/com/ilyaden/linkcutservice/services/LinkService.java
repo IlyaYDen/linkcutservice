@@ -20,9 +20,9 @@ public class LinkService {
     }
 
 
-    public void save(Link longLink){
-        linkRepository.save(longLink);
-    }
+    //public void save(Link longLink){
+    //    linkRepository.save(longLink);
+    //}
 
     public Link findById(long id) {
         Optional<Link> link = linkRepository.findById(id);
@@ -30,7 +30,7 @@ public class LinkService {
     }
 
     @Transactional
-    public Link addLink(Link link) {
+    public Link save(Link link) {
         if(linkRepository.findByLink(link.getLink()).isPresent()){
             Link l = linkRepository.findByLink(link.getLink()).get();
 
@@ -43,16 +43,12 @@ public class LinkService {
         Link link1 = new Link();
         link1.setLink(link.getLink());
         Optional<Link> optionalLink = linkRepository.findTopByOrderByIdDesc();
-        System.out.println(optionalLink );
-        System.out.println(" ___---___" );
-        System.out.println( link);
+
 
         if(optionalLink.isPresent()){
-            System.out.println("ggggg" );
             link1.setId(optionalLink.get().getId()+1);
             save(link1);
         } else {
-            System.out.println("gdfgdfgdf" );
             link1.setId(1);
             linkRepository.save(link1);
         }
@@ -62,12 +58,28 @@ public class LinkService {
         return link1;
     }
 
-    public Link findShortById(long count) {
+    public Link findLinkById(long count) {
         //Link link = linkRepository.findByShortLinkId(count);
         Optional<Link> l = linkRepository.findById(count);
-        if(l.isPresent())
-        return l.get();
-        else return null;
-        //else return null;
+        return l.orElse(null);
     }
+    public Link findLinkById(String id) {
+        if(Long.getLong(id.trim()) != null) {
+            return findLinkById(Long.getLong(id.trim()));
+        }
+        else {
+            long count = id.chars().filter(ch -> ch == ')').count();
+            return findLinkById(count);
+        }
+    }
+
+
+    public String redirectLink(String id) {
+            long count = id.chars().filter(ch -> ch == ')').count();
+            Link l = findLinkById(count);
+            return l.getLink();
+
+    }
+
+
 }

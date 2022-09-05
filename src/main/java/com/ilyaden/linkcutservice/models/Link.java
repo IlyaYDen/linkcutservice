@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +20,7 @@ public class Link {
 
 
 
+    @NotEmpty(message = "link should not be empty")
     private String link;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +28,7 @@ public class Link {
 
     @Transient
     private String LinkText;
+
 
     @Override
     public String toString() {

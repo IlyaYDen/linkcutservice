@@ -4,9 +4,9 @@ spring:
       ddl-auto: create-drop
     show-sql: true
   datasource:
-    url: jdbc:postgresql://localhost:5432/linkcutter
-    username: admin
-    password: admin
+    url: jdbc:postgresql://localhost:5432/shop
+    username: postgres
+    password: postgres
   flyway:
     baseline-on-migrate: true
   main:
